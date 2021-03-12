@@ -256,7 +256,10 @@ class _SecurityContext extends NativeFieldWrapperClass1
 
   void _setAlpnProtocols(Uint8List protocols, bool isServer)
       native "SecurityContext_SetAlpnProtocols";
+
   void _trustBuiltinRoots() native "SecurityContext_TrustBuiltinRoots";
+
+  int isFipsEnabled() native "SecurityContext_IsFipsEnabled";
 }
 
 /**

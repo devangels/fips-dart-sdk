@@ -765,13 +765,13 @@ static Dart_Handle ASN1TimeToMilliseconds(ASN1_TIME* aTime) {
 
 Dart_Handle X509Helper::GetStartValidity(Dart_NativeArguments args) {
   X509* certificate = GetX509Certificate(args);
-  ASN1_TIME* not_before = X509_get_notBefore(certificate);
+  ASN1_TIME* not_before = (ASN1_TIME*)X509_get0_notBefore(certificate);
   return ASN1TimeToMilliseconds(not_before);
 }
 
 Dart_Handle X509Helper::GetEndValidity(Dart_NativeArguments args) {
   X509* certificate = GetX509Certificate(args);
-  ASN1_TIME* not_after = X509_get_notAfter(certificate);
+  ASN1_TIME* not_after = (ASN1_TIME*)X509_get0_notAfter(certificate);
   return ASN1TimeToMilliseconds(not_after);
 }
 
@@ -858,6 +858,10 @@ void FUNCTION_NAME(SecurityContext_TrustBuiltinRoots)(
   ASSERT(context != NULL);
 
   context->TrustBuiltinRoots();
+}
+
+void FUNCTION_NAME(SecurityContext_IsFipsEnabled)(Dart_NativeArguments args) {
+  Dart_SetReturnValue(args, Dart_NewInteger(FIPS_mode()));
 }
 
 void FUNCTION_NAME(X509_Der)(Dart_NativeArguments args) {

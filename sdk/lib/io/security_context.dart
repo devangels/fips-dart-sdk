@@ -143,6 +143,10 @@ abstract class SecurityContext {
   /// Like [setClientAuthorities] but takes the contents of the file.
   void setClientAuthoritiesBytes(List<int> authCertBytes, {String? password});
 
+  /// Returns zero unless BoringSSL is built with BORINGSSL_FIPS, in
+  /// which case it returns one.
+  int isFipsEnabled();
+
   /// Whether the platform supports ALPN. This always returns true and will be
   /// removed in a future release.
   @deprecated
